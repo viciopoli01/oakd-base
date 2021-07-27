@@ -1,7 +1,7 @@
 # parameters
-ARG REPO_NAME="<REPO_NAME_HERE>"
-ARG DESCRIPTION="<DESCRIPTION_HERE>"
-ARG MAINTAINER="<YOUR_FULL_NAME> (<YOUR_EMAIL_ADDRESS>)"
+ARG REPO_NAME="oakd-duckietown"
+ARG DESCRIPTION="This is the base image for oakd application"
+ARG MAINTAINER="Vincenzo Polizzi polivicio@gmail.com, Trevor Phillips trevphil3@gmail.com"
 # pick an icon from: https://fontawesome.com/v4.7.0/icons/
 ARG ICON="cube"
 
@@ -50,6 +50,10 @@ ENV DT_LAUNCHER "${LAUNCHER}"
 # install apt dependencies
 COPY ./dependencies-apt.txt "${REPO_PATH}/"
 RUN dt-apt-install ${REPO_PATH}/dependencies-apt.txt
+
+# OAK-D reload usb rulers
+RUN curl -fL http://docs.luxonis.com/_static/install_dependencies.sh | bash
+RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
 # install python3 dependencies
 ARG PIP_INDEX_URL="https://pypi.org/simple"

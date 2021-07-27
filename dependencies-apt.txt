@@ -1,1 +1,16 @@
-# LIST YOUR APT PACKAGES HERE
+# OAK-D
+curl
+udev
+ffmpeg
+libsm6
+libxext6
+libgl1-mesa-glx
+libavcodec-dev
+libavformat-dev
+libswscale-dev
+libtbb-dev
+libjpeg-dev
+libpng-dev
+libtiff-dev
+libdc1394-22-dev
+usbutils
