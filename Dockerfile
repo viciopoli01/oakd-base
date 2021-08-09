@@ -47,13 +47,14 @@ ENV DT_REPO_PATH "${REPO_PATH}"
 ENV DT_LAUNCH_PATH "${LAUNCH_PATH}"
 ENV DT_LAUNCHER "${LAUNCHER}"
 
+# OAK-D reload usb rulers
+RUN apt-get update && apt-get install -y curl && curl -fL http://docs.luxonis.com/_static/install_dependencies.sh | bash
+RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
+RUN pip3 install depthai==2.7.1
+
 # install apt dependencies
 COPY ./dependencies-apt.txt "${REPO_PATH}/"
 RUN dt-apt-install ${REPO_PATH}/dependencies-apt.txt
-
-# OAK-D reload usb rulers
-RUN curl -fL http://docs.luxonis.com/_static/install_dependencies.sh | bash
-RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
 # install python3 dependencies
 ARG PIP_INDEX_URL="https://pypi.org/simple"
